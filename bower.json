@@ -1,0 +1,24 @@
+{
+  "name": "aide-globalclass",
+  "homepage": "https://github.com/roeldev/aide-globalclass",
+  "version": "0.0.0",
+  "license": "GPL-2.0+",
+  "main": "dist/aide-globalclass.js",
+  "authors": [
+    "Roel Schut (http://roelschut.nl)"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "tests",
+    ".gitignore",
+    ".jscsrc",
+    ".jshintrc",
+    ".travis.yml",
+    "gulpfile.js",
+    "package.json",
+    "remove_node_modules.bat",
+    "start.bat"
+  ]
+}
