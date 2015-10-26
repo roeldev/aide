@@ -1,6 +1,8 @@
 {
   "private": true,
   "devDependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^11.2.0",
     "coveralls": "^2.11.4",
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.1.3",
@@ -13,6 +15,6 @@
     "start": "npm run setup && gulp watch",
     "test": "mocha --reporter spec --check-leaks",
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks",
-    "build": "browserify src/aide-flag.js -o dist/aide-flag.js -s Aide.Flag"
+    "build": "browserify src/index.js -t babelify -o dist/aide-globalclass.js -s Aide.GlobalClass"
   }
 }
