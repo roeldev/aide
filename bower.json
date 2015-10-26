@@ -1,11 +1,11 @@
 {
-  "name": "aide-globalclass",
+  "name": "Aide.GlobalClass",
   "homepage": "https://github.com/roeldev/aide-globalclass",
   "version": "0.0.0",
   "license": "GPL-2.0+",
   "main": "dist/aide-globalclass.js",
   "authors": [
-    "Roel Schut (http://roelschut.nl)"
+    "Roel Schut"
   ],
   "ignore": [
     "**/.*",

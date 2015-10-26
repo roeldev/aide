@@ -64,4 +64,4 @@ API.toggle = function($flag)
     return $result;
 };
 
-export default API;
+module.exports = API;

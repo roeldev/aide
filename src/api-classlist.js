@@ -18,7 +18,7 @@ const TARGET = document.documentElement;
  */
 function classListContains($flag)
 {
-    let $classlist = TARGET.classList;
+    let $classList = TARGET.classList;
     let $result    = false;
 
     // check if the flag without a value is in the classList
@@ -73,15 +73,15 @@ var API = function($flag)
  * Set a global class flag to the document <html> root element.
  *
  * @param {string} $flag
- * @param {string} $value
- * @param {boolean} $boolean
+ * @param {string} $value ['']
+ * @param {boolean} $bool [true]
  * @return {boolean}
  */
-API.set = function($flag, $value='', $boolean=true)
+API.set = function($flag, $value='', $bool=true)
 {
     // it is possible to conditionally set or unset a flag/value. when the
-    // $boolean param is false, unset the (already added) flag.
-    if ($boolean === false)
+    // $bool param is false, unset the (already added) flag.
+    if ($bool === false)
     {
         return API.unset($flag);
     }
@@ -158,4 +158,4 @@ API.toggle = function($flag)
     return $result;
 };
 
-export default API;
+module.exports = API;
