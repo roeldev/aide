@@ -9,16 +9,12 @@
   ],
   "ignore": [
     "**/.*",
+    "**/*.bat",
+    "build",
     "bower_components",
     "node_modules",
     "tests",
-    ".gitignore",
-    ".jscsrc",
-    ".jshintrc",
-    ".travis.yml",
     "gulpfile.js",
-    "package.json",
-    "remove_node_modules.bat",
-    "start.bat"
+    "package.json"
   ]
 }
