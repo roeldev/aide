@@ -1,52 +1,44 @@
 'use strict';
 
-var Babelify          = require('babelify');
-var Browserify        = require('browserify');
-var Gulp              = require('gulp');
-var GulpHeader        = require('gulp-header');
-var GulpRename        = require('gulp-rename');
-var GulpSize          = require('gulp-size');
-var GulpUglify        = require('gulp-uglify');
-var VinylBuffer       = require('vinyl-buffer');
-var VinylSourceStream = require('vinyl-source-stream');
-var Path              = require('path');
-var Package           = require('./bower.json');
+var Bundle      = require('./build/bundle.js');
+var Del         = require('del');
+var EventStream = require('event-stream');
+var Glob        = require('glob');
+var Gulp        = require('gulp');
+var RunSequence = require('run-sequence');
 
 //------------------------------------------------------------------------------
 
-Gulp.task('build', function()
+// test the bundled files
+Gulp.task('test', function()
 {
-    var $filename = Path.basename(Package.main, '.js');
+    console.log('test');
+});
 
-    var $headerTemplate = [
-        '${pkg.name} v${pkg.version}',
-        '${pkg.license} License',
-        '(c) 2014-${year} ${authors}',
-        '${pkg.homepage}'
-    ].join(' | ');
+// bundle the main files
+Gulp.task('build', function($callback)
+{
+    // remove all files from the dist folder
+    Del('./dist/**/*');
 
-    var $headerVars = {
-        'pkg':     Package,
-        'authors': Package.authors.join(', '),
-        'year':    new Date().getFullYear()
-    };
+    // bundle all main files and export them to the dist folder
+    Glob('./src/[!_]*.js', function($error, $files)
+    {
+        if ($error) $callback($error);
 
-    var $browserify = Browserify({
-        'entries':    './src/index.js',
-        'standalone': Package.name,
-        'transform':  [Babelify]
+        EventStream.merge( Bundle($files) )
+            .on('end', $callback);
     });
+})
 
-    return $browserify.bundle()
-        .pipe( VinylSourceStream($filename + '.js') )
-        .pipe( VinylBuffer() )
-        .pipe( GulpHeader('/*! '+ $headerTemplate +' */\n', $headerVars) )
-        .pipe( GulpSize() )
-        .pipe( Gulp.dest('./dist/') )
-        // create an uglified version of the packed file
-        .pipe( GulpUglify() )
-        .pipe( GulpHeader('/*! '+ $headerTemplate +' */\n', $headerVars) )
-        .pipe( GulpRename($filename + '.min.js') )
-        .pipe( GulpSize() )
-        .pipe( Gulp.dest('./dist/') );
+// complete build + test process
+Gulp.task('build:test', function($callback)
+{
+    RunSequence('build', 'test', $callback);
+});
+
+Gulp.task('watch', function()
+{
+    Gulp.watch('src/**/*.js', ['build:test']);
+    Gulp.watch('tests/**/*', ['test'])
 });
