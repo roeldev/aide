@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- use mocha and chai to perform tests -->
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script>mocha.setup('bdd')</script>
+<!-- the build packages to test -->
+<script src="../dist/aide-state.min.js"></script>
+<!-- tests for above packages -->
+<script src="main.js"></script>
+</head>
+<!-- run mocha when the body is fully loaded -->
+<body onload="mocha.run()">
+    <div id="mocha"></div>
+</body>
+</html>
