@@ -5,15 +5,8 @@ var Del         = require('del');
 var EventStream = require('event-stream');
 var Glob        = require('glob');
 var Gulp        = require('gulp');
-var RunSequence = require('run-sequence');
 
 //------------------------------------------------------------------------------
-
-// test the bundled files
-Gulp.task('test', function()
-{
-    console.log('test');
-});
 
 // bundle the main files
 Gulp.task('build', function($callback)
@@ -31,14 +24,7 @@ Gulp.task('build', function($callback)
     });
 })
 
-// complete build + test process
-Gulp.task('build:test', function($callback)
+Gulp.task('watch', function($callback)
 {
-    RunSequence('build', 'test', $callback);
-});
-
-Gulp.task('watch', function()
-{
-    Gulp.watch('src/**/*.js', ['build:test']);
-    Gulp.watch('tests/**/*', ['test'])
+    Gulp.watch('src/**/*.js', ['build']);
 });
