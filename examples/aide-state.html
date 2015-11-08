@@ -5,9 +5,16 @@
 </head>
 
 <body class="test3__value2">
-<script src="../dist/aide-state.min.js"></script>
+<script src="../dist/aide-state.js"></script>
 <script>
 
+console.log('test1', 'cl', Aide.State._classList.search(Aide.State.TARGET, 'test1', Aide.State.SEPERATOR));
+console.log('test2', 'cl', Aide.State._classList.search(Aide.State.TARGET, 'test2', Aide.State.SEPERATOR));
+
+console.log('test1', 'rx', Aide.State._regExp.search(Aide.State.TARGET, 'test1', Aide.State.SEPERATOR));
+console.log('test2', 'rx', Aide.State._regExp.search(Aide.State.TARGET, 'test2', Aide.State.SEPERATOR));
+
+//*
 // result: true
 console.log(Aide.State('test1'));
 // result: false
@@ -27,6 +34,7 @@ Aide.State.SEPERATOR = '__';
 console.log(Aide.State('test3'));
 // result: true
 console.log(Aide.State('test3', 'value2'));
+//*/
 
 </script>
 </body>

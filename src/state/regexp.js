@@ -1,67 +1,81 @@
 'use strict';
 
 /**
- * A reference to the <html> element in the document root.
- * @type {HTMLElement}
- */
-const TARGET = document.documentElement;
-
-//------------------------------------------------------------------------------
-
-function newRegExp($flag)
-{
-    return new RegExp('(?:^|\s)'+ $flag +'(?!\S)', 'g');
-}
-
-//------------------------------------------------------------------------------
-
-/**
- * Checks if the <html> element's class attribute contains the specified flag.
- * It returns a `string` with the full flag's class (including value) when
- * found, or `false` when not found.
+ * Creates a new RegExp object wich matches the given flag.
  *
  * @param {string} $flag
- * @return {boolean|string}
+ * @return {RegExp}
  */
-var API = function($flag)
+function newRegExp($flag)
 {
-    return newRegExp($flag).test(TARGET.className);
-};
+    return new RegExp('(?:^|\\s)'+ $flag +'(?!\\S)', 'g');
+}
 
-API.set = function($flag, $value='', $boolean=true)
+/**
+ * Escapes the seperator. Function taken from
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+ *
+ * @param {string} $str
+ * @return {string}
+ */
+function escapeRegExp($str)
 {
-    let $result = !newRegExp($flag).test(TARGET.className);
-    if ($result)
+  return $str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// -----------------------------------------------------------------------------
+
+module.exports = {
+
+    /**
+     * Searches the target's class attribute for the specified flag. It returns
+     * a `string` with the full flag's class (including value) when found,
+     * or `false` when not found.
+     *
+     * @param {HTMLElement} $target
+     * @param {string} $flag
+     * @param {string} $seperator ['--']
+     * @return {string|boolean}
+     */
+    search: function regExpSearch($target, $flag, $seperator='--')
     {
-        TARGET.className += ' '+ $flag;
+        $seperator = escapeRegExp($seperator);
+
+        let $result = false;
+        let $found  = $target.className.match($flag + $seperator + '.*');
+
+        if ($found)
+        {
+            $result = $found[0].split(' ')[0];
+        }
+        else if (newRegExp($flag).test($target.className))
+        {
+            $result = $flag;
+        }
+
+        return $result;
+    },
+
+    /**
+     * Add the class to the target's class attribute.
+     *
+     * @param {HTMLElement} $target
+     * @param {string} $className
+     */
+    add: function regExpAdd($target, $className)
+    {
+        $target.className += ' '+ $className;
+    },
+
+    /**
+     * Remove the class from the target's class attribute.
+     *
+     * @param {HTMLElement} $target
+     * @param {string} $className
+     */
+    remove: function regExpRemove($target, $className)
+    {
+        let $regExp = newRegExp($className);
+        $target.className = $target.className.replace($regExp, '');
     }
-    return $result;
 };
-
-API.unset = function($flag)
-{
-    let $result = newRegExp($flag).test(TARGET.className);
-    if ($result)
-    {
-        TARGET.className = TARGET.className.replace($regExp, '');
-    }
-    return $result;
-};
-
-API.toggle = function($flag)
-{
-    let $regExp = newRegExp($flag);
-    let $result = !$regExp.test(TARGET.className);
-
-    if ($result)
-    {
-        TARGET.className += ' '+ $flag;
-    }
-    else
-    {
-        TARGET.className = TARGET.className.replace($regExp, '');
-    }
-    return $result;
-};
-
-module.exports = API;
