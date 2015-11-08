@@ -29,9 +29,6 @@ module.exports = function($config)
             dir:  'coverage/'
         },
 
-        // increase timeout in case connection in CI is slow
-        captureTimeout: 120000,
-
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: true
