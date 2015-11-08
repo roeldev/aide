@@ -1,0 +1,33 @@
+<!doctype html>
+<html class="test1 test2--value">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body class="test3__value2">
+<script src="../dist/aide-state.min.js"></script>
+<script>
+
+// result: true
+console.log(Aide.State('test1'));
+// result: false
+console.log(Aide.State('not-set'));
+// result: true
+console.log(Aide.State('not-set', false));
+
+// result: value
+console.log(Aide.State('test2'));
+// result: true
+console.log(Aide.State('test2', 'value'));
+
+Aide.State.TARGET = document.body;
+Aide.State.SEPERATOR = '__';
+
+// result: value2
+console.log(Aide.State('test3'));
+// result: true
+console.log(Aide.State('test3', 'value2'));
+
+</script>
+</body>
+</html>
