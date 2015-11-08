@@ -17,9 +17,9 @@
     "sl_ios_safari":
     {
         "base":        "SauceLabs",
-        "browserName": "iphone",
-        "platform":    "OS X 10.9",
-        "version":     "7.1"
+        "browserName": "safari",
+        "platform":    "OS X 10.10",
+        "version":     "8"
     },
 
     "sl_ie_11":
@@ -28,5 +28,13 @@
         "browserName": "internet explorer",
         "platform":    "Windows 8.1",
         "version":     "11"
+    },
+
+    "sl_ie_9":
+    {
+        "base":        "SauceLabs",
+        "browserName": "internet explorer",
+        "platform":    "Windows 7",
+        "version":     "9"
     }
 }
