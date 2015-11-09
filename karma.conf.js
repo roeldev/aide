@@ -20,8 +20,8 @@ module.exports = function($config)
     var $sauceCustomLaunchers = require('./.sauce-browsers.json');
     var $sauceBrowsers        = Object.keys($sauceCustomLaunchers);
 
-    $config.set({
-
+    $config.set(
+    {
         // base path that will be used to resolve all patterns (eg. files,
         // exclude)
         //basePath: '',

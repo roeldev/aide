@@ -6,11 +6,11 @@ module.exports = function($config)
     require('./karma.conf.js')($config);
 
     // overrule basic settings
-    $config.set({
-
+    $config.set(
+    {
         sauceLabs: {
-            startConnect: true,
-            tunnelIdentifier: null
+            startConnect: false,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         },
 
         // preprocess matching files before serving them to the browser
