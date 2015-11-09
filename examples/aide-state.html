@@ -8,32 +8,32 @@
 <script src="../dist/aide-state.js"></script>
 <script>
 
-console.log('test1', 'cl', Aide.State._classList.search(Aide.State.TARGET, 'test1', Aide.State.SEPERATOR));
-console.log('test2', 'cl', Aide.State._classList.search(Aide.State.TARGET, 'test2', Aide.State.SEPERATOR));
+console.log('test1', 'cl', aide.state._classList.search(aide.state.TARGET, 'test1', aide.state.SEPERATOR));
+console.log('test2', 'cl', aide.state._classList.search(aide.state.TARGET, 'test2', aide.state.SEPERATOR));
 
-console.log('test1', 'rx', Aide.State._regExp.search(Aide.State.TARGET, 'test1', Aide.State.SEPERATOR));
-console.log('test2', 'rx', Aide.State._regExp.search(Aide.State.TARGET, 'test2', Aide.State.SEPERATOR));
+console.log('test1', 'rx', aide.state._regExp.search(aide.state.TARGET, 'test1', aide.state.SEPERATOR));
+console.log('test2', 'rx', aide.state._regExp.search(aide.state.TARGET, 'test2', aide.state.SEPERATOR));
 
 //*
 // result: true
-console.log(Aide.State('test1'));
+console.log(aide.state('test1'));
 // result: false
-console.log(Aide.State('not-set'));
+console.log(aide.state('not-set'));
 // result: true
-console.log(Aide.State('not-set', false));
+console.log(aide.state('not-set', false));
 
 // result: value
-console.log(Aide.State('test2'));
+console.log(aide.state('test2'));
 // result: true
-console.log(Aide.State('test2', 'value'));
+console.log(aide.state('test2', 'value'));
 
-Aide.State.TARGET = document.body;
-Aide.State.SEPERATOR = '__';
+aide.state.TARGET = document.body;
+aide.state.SEPERATOR = '__';
 
 // result: value2
-console.log(Aide.State('test3'));
+console.log(aide.state('test3'));
 // result: true
-console.log(Aide.State('test3', 'value2'));
+console.log(aide.state('test3', 'value2'));
 //*/
 
 </script>

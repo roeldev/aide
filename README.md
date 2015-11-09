@@ -1,4 +1,4 @@
-# Aide
+# aide
 
   [![Bower version][bower-img]][bower-url]
   [![Build][travis-img]][travis-url]

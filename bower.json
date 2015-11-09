@@ -1,7 +1,7 @@
 {
-  "name": "Aide",
+  "name": "aide",
   "homepage": "https://github.com/roeldev/aide",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "GPL-2.0+",
   "main": ["dist/aide-resize.js", "dist/aide-scroll.js", "dist/aide-state.js"],
   "authors": [

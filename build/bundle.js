@@ -20,10 +20,10 @@ module.exports = function($files)
 {
     return $files.map(function($entry)
     {
-        var $libname  = Package.name.split('.')[0];
+        var $libname  = Package.name.split('.')[0].toLowerCase();
         var $basename = Path.basename($entry, Path.extname($entry));
-        var $filename = $libname.toLowerCase() +'-'+ $basename;
-        var $pkgname  = $libname + '.' + $basename.charAt(0).toUpperCase() + $basename.slice(1);
+        var $filename = $libname + '-' + $basename;
+        var $pkgname  = $libname + '.' + $basename;
 
         var $header     = Header($pkgname);
         var $browserify = Browserify({
