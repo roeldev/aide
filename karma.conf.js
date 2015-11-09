@@ -59,7 +59,7 @@ module.exports = function($config)
 
         // saucelabs settings
         sauceLabs: {
-            testName: 'Aide (roeldev/aide) Unit Tests',
+            testName: 'Development',
             tunnelIdentifier: 'karma-sauce-local'
         },
         // saucelab os/browser combinations

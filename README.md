@@ -3,7 +3,7 @@
   [![Bower version][bower-img]][bower-url]
   [![Build][travis-img]][travis-url]
   [![Test Coverage][coveralls-img]][coveralls-url]
-  
+
   [![Selenium Browser Matrix][sauce-img]][sauce-url]
 
 [bower-img]: https://img.shields.io/bower/v/aide.svg
