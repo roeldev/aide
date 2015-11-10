@@ -15,7 +15,7 @@
 [sauce-img]: https://saucelabs.com/browser-matrix/roeldev.svg
 [sauce-url]: https://saucelabs.com/u/roeldev
 
-**Some small helpfull functions and events**
+**Some small helpful functions and events to enhance your app and ease your development**
 
 ## Installation
 ```sh
