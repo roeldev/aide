@@ -26,7 +26,8 @@ module.exports = function($config)
 
         coverageReporter: {
             type: 'lcovonly',
-            dir:  'coverage/'
+            dir:  'coverage/',
+            file: 'lcov.info'
         },
 
         // Continuous Integration mode
