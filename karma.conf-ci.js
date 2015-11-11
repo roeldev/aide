@@ -17,17 +17,16 @@ module.exports = function($config)
         // available preprocessors:
         // https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'src/**/*.js': ['coverage']
+            'dist/*.js': ['coverage']
         },
 
         // test results reporter to use. possible values: 'dots', 'progress'.
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: $config.reporters.concat(['coverage']),
+        reporters: $config.reporters.concat(['coverage', 'coveralls']),
 
         coverageReporter: {
             type: 'lcovonly',
-            dir:  'coverage/',
-            file: 'lcov.info'
+            dir:  'coverage/'
         },
 
         // Continuous Integration mode
