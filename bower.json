@@ -10,11 +10,13 @@
   "ignore": [
     "**/.*",
     "**/*.bat",
-    "build",
     "bower_components",
+    "build",
     "node_modules",
+    "test",
     "tests",
     "gulpfile.js",
+    "karma.*.js"
     "package.json"
   ]
 }
