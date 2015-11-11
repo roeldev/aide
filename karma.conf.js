@@ -3,7 +3,6 @@
 // load environment variables from .env file
 var DotEnv = require('dotenv');
 DotEnv.config({ silent: true });
-DotEnv.load();
 
 // -----------------------------------------------------------------------------
 
