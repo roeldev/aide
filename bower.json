@@ -16,7 +16,7 @@
     "test",
     "tests",
     "gulpfile.js",
-    "karma.*.js"
+    "karma.*.js",
     "package.json"
   ]
 }
