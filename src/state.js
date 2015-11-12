@@ -89,7 +89,7 @@ API.set = function($flag, $value='', $bool=true)
     // to flag so we get a class like .flag--value
     if (!!$value)
     {
-        $flag += API.SEPERATOR;
+        $flag += API.SEPERATOR + $value;
     }
 
     // als we de huidige gesette flagValue terug krijgen,

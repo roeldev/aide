@@ -85,7 +85,7 @@ API.set = function ($flag) {
     // when we have a valid, non empty value, append it
     // to flag so we get a class like .flag--value
     if (!!$value) {
-        $flag += API.SEPERATOR;
+        $flag += API.SEPERATOR + $value;
     }
 
     // als we de huidige gesette flagValue terug krijgen,

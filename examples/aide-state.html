@@ -27,6 +27,10 @@ console.log(aide.state('test2'));
 // result: true
 console.log(aide.state('test2', 'value'));
 
+aide.state.set('test4', 'some-value')
+
+// -----------------------------------------------------------------------------
+
 aide.state.TARGET = document.body;
 aide.state.SEPERATOR = '__';
 
@@ -35,6 +39,7 @@ console.log(aide.state('test3'));
 // result: true
 console.log(aide.state('test3', 'value2'));
 //*/
+
 
 </script>
 </body>
