@@ -1,11 +1,23 @@
 {
+  "title": "aide",
   "name": "aide",
-  "homepage": "https://github.com/roeldev/aide",
   "version": "0.1.0",
-  "license": "GPL-2.0+",
-  "main": ["dist/aide-resize.js", "dist/aide-scroll.js", "dist/aide-state.js"],
+  "homepage": "https://github.com/roeldev/aide",
   "authors": [
-    "Roel Schut"
+    "Roel Schut (http://roelschut.nl)"
+  ],
+  "license": "GPL-2.0+",
+  "main": [
+    "dist/aide-resize.js",
+    "dist/aide-scroll.js",
+    "dist/aide-state.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roeldev/aide.git"
+  },
+  "bugs": "https://github.com/roeldev/aide/issues",
+  "keywords": [
   ],
   "ignore": [
     "**/.*",
