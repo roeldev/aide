@@ -1,3 +1,6 @@
+/**
+ * aide | src/state.js
+ */
 'use strict';
 
 const UtilsClassList = require('./state/classlist');
@@ -11,7 +14,7 @@ const Utils = (document.documentElement.classList ?
                UtilsClassList :
                UtilsRegExp);
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 /**
  * Checks if the <html> element has a class wich represents out flag.
@@ -174,5 +177,7 @@ API.SEPERATOR = '--';
 // tested seperatly
 API._classList = UtilsClassList;
 API._regExp    = UtilsRegExp;
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 module.exports = API;

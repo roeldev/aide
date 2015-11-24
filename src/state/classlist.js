@@ -1,7 +1,10 @@
+/**
+ * aide | src/state/classlist.js
+ */
 'use strict';
 
-module.exports = {
-
+module.exports =
+{
     /**
      * Searches the target's classList for the specified flag. It returns a
      * `string` with the full flag's class (including value) when found,

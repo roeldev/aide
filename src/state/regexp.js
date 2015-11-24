@@ -1,3 +1,6 @@
+/**
+ * aide | src/state/regexp.js
+ */
 'use strict';
 
 /**
@@ -23,10 +26,10 @@ function escapeRegExp($str)
   return $str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-module.exports = {
-
+module.exports =
+{
     /**
      * Searches the target's class attribute for the specified flag. It returns
      * a `string` with the full flag's class (including value) when found,

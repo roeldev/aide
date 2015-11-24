@@ -22,5 +22,4 @@ Thumbs.db
 *.log
 *.pid
 *.seed
-*.sublime-project
-*.sublime-workspace
+*.sublime-*

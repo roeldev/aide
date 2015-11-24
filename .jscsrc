@@ -37,7 +37,6 @@
         ["do", "case", "try", "void", "while", "function"],
     //"requirePaddingNewLinesInObjects": true,
     "requireParenthesesAroundIIFE": true,
-    "requireQuotedKeysInObjects": true,
     "requireSemicolons": true,
     "requireSpaceAfterBinaryOperators": true,
     "requireSpaceAfterKeywords":

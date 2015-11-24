@@ -1,5 +1,8 @@
-/*! aide.state v0.1.0 | GPL-2.0+ License | (c) 2014-2015 Roel Schut | https://github.com/roeldev/aide */
+/*! aide.state v0.1.0 | GPL-2.0+ License | (c) 2014-2015 Roel Schut (http://roelschut.nl) | https://github.com/roeldev/aide */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.aide || (g.aide = {})).state = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * aide | src/state.js
+ */
 'use strict';
 
 var UtilsClassList = require('./state/classlist');
@@ -11,7 +14,7 @@ var UtilsRegExp = require('./state/regexp');
  */
 var Utils = document.documentElement.classList ? UtilsClassList : UtilsRegExp;
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 /**
  * Checks if the <html> element has a class wich represents out flag.
@@ -163,13 +166,17 @@ API.SEPERATOR = '--';
 API._classList = UtilsClassList;
 API._regExp = UtilsRegExp;
 
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
 module.exports = API;
 
 },{"./state/classlist":2,"./state/regexp":3}],2:[function(require,module,exports){
+/**
+ * aide | src/state/classlist.js
+ */
 'use strict';
 
 module.exports = {
-
     /**
      * Searches the target's classList for the specified flag. It returns a
      * `string` with the full flag's class (including value) when found,
@@ -234,6 +241,9 @@ module.exports = {
 };
 
 },{}],3:[function(require,module,exports){
+/**
+ * aide | src/state/regexp.js
+ */
 'use strict';
 
 /**
@@ -257,10 +267,9 @@ function escapeRegExp($str) {
     return $str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 module.exports = {
-
     /**
      * Searches the target's class attribute for the specified flag. It returns
      * a `string` with the full flag's class (including value) when found,
