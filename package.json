@@ -3,7 +3,7 @@
   "scripts": {
     "setup": "npm install && bower install",
     "start": "npm run setup && gulp watch",
-    "test": "node_modules/.bin/karma start karma-test.conf.js",
+    "test": "node_modules/.bin/karma start",
     "test-ci": "node_modules/.bin/karma start karma-ci.conf.js --single-run"
   },
   "devDependencies": {
