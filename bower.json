@@ -1,7 +1,7 @@
 {
   "title": "aide",
   "name": "aide",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/roeldev/aide",
   "authors": [
     "Roel Schut (http://roelschut.nl)"
@@ -17,8 +17,7 @@
     "url": "https://github.com/roeldev/aide.git"
   },
   "bugs": "https://github.com/roeldev/aide/issues",
-  "keywords": [
-  ],
+  "keywords": [],
   "ignore": [
     "**/.*",
     "**/*.bat",
