@@ -126,7 +126,7 @@ API.unset = function($flag)
     let $result = false;
     let $found  = API.search($flag);
 
-    if ($found !== false && $flag != $found)
+    if ($found !== false)
     {
         Utils.remove(API.TARGET, $found);
         $result = true;
@@ -139,9 +139,10 @@ API.unset = function($flag)
  * already set. Remove it when it is.
  *
  * @param {string} $flag
+ * @param {string} $value ['']
  * @return {boolean}
  */
-API.toggle = function($flag)
+API.toggle = function($flag, $value='')
 {
     let $result = false;
     let $found  = API.search($flag);
@@ -152,7 +153,7 @@ API.toggle = function($flag)
     }
     else
     {
-        Utils.add(API.TARGET, $flag);
+        API.set($flag, $value);
         $result = true;
     }
 
