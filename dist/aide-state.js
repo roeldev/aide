@@ -1,4 +1,4 @@
-/*! aide.state v0.1.1 | GPL-2.0+ License | (c) 2014-2015 Roel Schut (http://roelschut.nl) | https://github.com/roeldev/aide */
+/*! aide v0.1.1 | aide.state | GPL-2.0+ License | (c) 2014-2016 Roel Schut (http://roelschut.nl) | https://github.com/roeldev/aide */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.aide || (g.aide = {})).state = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * aide | src/state.js
@@ -30,10 +30,10 @@ var Utils = document.documentElement.classList ? UtilsClassList : UtilsRegExp;
  * @param {string} $flag
  * @return {boolean|string}
  */
-var API = function API($flag) {
+var AideState = function AideState($flag) {
     var $value = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 
-    var $found = API.search($flag);
+    var $found = AideState.search($flag);
 
     // result is positive when:
     // - flag is set and $value = true
@@ -44,7 +44,7 @@ var API = function API($flag) {
     // not true) appended to the flag (with the seperator) equals the found
     // class, otherwise return the found value of the flag
     if (!$result && $found) {
-        var $prefix = $flag + API.SEPERATOR;
+        var $prefix = $flag + AideState.SEPERATOR;
 
         $result = $value === true ? $found.substring($prefix.length) : $found === $prefix + $value;
     }
@@ -60,8 +60,8 @@ var API = function API($flag) {
  * @param {string} $flag
  * @return {string|boolean}
  */
-API.search = function ($flag) {
-    return Utils.search(API.TARGET, $flag, API.SEPERATOR);
+AideState.search = function ($flag) {
+    return Utils.search(AideState.TARGET, $flag, AideState.SEPERATOR);
 };
 
 /**
@@ -72,37 +72,34 @@ API.search = function ($flag) {
  * @param {boolean} $bool [true]
  * @return {boolean}
  */
-API.set = function ($flag) {
+AideState.set = function ($flag) {
     var $value = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
     var $bool = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
 
     // it is possible to conditionally set or unset a flag/value. when the
     // $bool param is false, unset the (already added) flag.
     if ($bool === false) {
-        return API.unset($flag);
+        return AideState.unset($flag);
     }
 
     var $result = false;
-    var $found = API.search($flag);
+    var $found = AideState.search($flag);
 
     // when we have a valid, non empty value, append it
     // to flag so we get a class like .flag--value
     if (!!$value) {
-        $flag += API.SEPERATOR + $value;
+        $flag += AideState.SEPERATOR + $value;
     }
 
-    // als we de huidige gesette flagValue terug krijgen,
-    // deze verwijderen
+    // if we've found the currently set flagValue, remove it
     if ($found !== false && $flag != $found) {
-        Utils.remove(API.TARGET, $found);
-        //API.TARGET.classList.remove($found);
+        Utils.remove(AideState.TARGET, $found);
         $found = false;
     }
 
     // when not already set, add the new flag to the list
     if (!$found) {
-        Utils.add(API.TARGET, $flag);
-        //API.TARGET.classList.add($flag);
+        Utils.add(AideState.TARGET, $flag);
         $result = true;
     }
 
@@ -115,12 +112,12 @@ API.set = function ($flag) {
  * @param {string} $flag
  * @return {boolean}
  */
-API.unset = function ($flag) {
+AideState.unset = function ($flag) {
     var $result = false;
-    var $found = API.search($flag);
+    var $found = AideState.search($flag);
 
     if ($found !== false) {
-        Utils.remove(API.TARGET, $found);
+        Utils.remove(AideState.TARGET, $found);
         $result = true;
     }
     return $result;
@@ -134,16 +131,16 @@ API.unset = function ($flag) {
  * @param {string} $value ['']
  * @return {boolean}
  */
-API.toggle = function ($flag) {
+AideState.toggle = function ($flag) {
     var $value = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
     var $result = false;
-    var $found = API.search($flag);
+    var $found = AideState.search($flag);
 
     if ($found !== false) {
-        Utils.remove(API.TARGET, $found);
+        Utils.remove(AideState.TARGET, $found);
     } else {
-        API.set($flag, $value);
+        AideState.set($flag, $value);
         $result = true;
     }
 
@@ -154,24 +151,24 @@ API.toggle = function ($flag) {
  * A reference to the <html> element in the document root.
  * @type {HTMLElement}
  */
-API.TARGET = document.documentElement;
+AideState.TARGET = document.documentElement;
 
 /**
  * The seperator sequence between a flag and a value (eg. flag--value).
  * @type {string}
  */
-API.SEPERATOR = '--';
+AideState.SEPERATOR = '--';
 
 // -----------------------------------------------------------------------------
 
 // expose both versions of adding/removing/searching for classes so they can be
 // tested seperatly
-API._classList = UtilsClassList;
-API._regExp = UtilsRegExp;
+AideState._classList = UtilsClassList;
+AideState._regExp = UtilsRegExp;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-module.exports = API;
+module.exports = AideState;
 
 },{"./state/classlist":2,"./state/regexp":3}],2:[function(require,module,exports){
 /**

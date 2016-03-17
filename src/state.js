@@ -30,7 +30,7 @@ const Utils = (document.documentElement.classList ?
  * @param {string} $flag
  * @return {boolean|string}
  */
-var AideState = function($flag, $value=true)
+const AideState = function($flag, $value=true)
 {
     let $found = AideState.search($flag);
 
@@ -95,8 +95,7 @@ AideState.set = function($flag, $value='', $bool=true)
         $flag += AideState.SEPERATOR + $value;
     }
 
-    // als we de huidige gesette flagValue terug krijgen,
-    // deze verwijderen
+    // if we've found the currently set flagValue, remove it
     if ($found !== false && $flag != $found)
     {
         Utils.remove(AideState.TARGET, $found);
