@@ -1,11 +1,13 @@
 'use strict';
 
-var Package = require('../bower.json');
+const Package = require('../bower.json');
 
 //------------------------------------------------------------------------------
 
-var _templateParts = [
+const templateParts =
+[
     '${pkg.name} v${pkg.version}',
+    '${lib}',
     '${pkg.license} License',
     '(c) 2014-${year} ${authors}',
     '${pkg.homepage}'
@@ -13,14 +15,13 @@ var _templateParts = [
 
 module.exports = function($pkgname)
 {
-    var $pkg = Package;
-    $pkg.name = $pkgname;
-
     return {
-        'template': '/*! '+ _templateParts.join(' | ') +' */\n',
+        'template': '/*! '+ templateParts.join(' | ') +' */\n',
 
-        'vars': {
-            'pkg':     $pkg,
+        'vars':
+        {
+            'pkg':     Package,
+            'lib':     $pkgname,
             'authors': Package.authors.join(', '),
             'year':    new Date().getFullYear()
         }
