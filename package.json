@@ -4,7 +4,8 @@
     "setup": "npm install && bower install",
     "start": "npm run setup && gulp watch",
     "test": "node_modules/.bin/karma start",
-    "test-ci": "node_modules/.bin/karma start karma-ci.conf.js --single-run"
+    "test-ci": "node_modules/.bin/karma start karma-ci.conf.js --single-run",
+    "depcheck": "depcheck --ignores=chai"
   },
   "devDependencies": {
     "babelify": "^6.4.0",
