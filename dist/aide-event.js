@@ -20,14 +20,14 @@ var Utils = require('./event/utils');
  * @return {Map}
  */
 function createEventsMap() {
-    var $result = new Map();
+    var $result = {};
 
     for (var $i = 0, $iL = arguments.length; $i < $iL; $i++) {
         var $class = arguments[$i];
         var $events = $class.eventTypes();
 
         for (var $j = 0, $jL = $events.length; $j < $jL; $j++) {
-            $result.set($events[$j], $class);
+            $result[$events[$j]] = $class;
         }
     }
 
@@ -36,7 +36,7 @@ function createEventsMap() {
 
 // -----------------------------------------------------------------------------
 
-var _targets = new Map();
+var _targets = {};
 var _emitters = createEventsMap(require('./event/ResizeEventsEmitter'), require('./event/ScrollEventsEmitter'));
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -65,24 +65,24 @@ AideEvent.on = function ($target, $type, $listener) {
     }
 
     // check if the event type is one of the custom types
-    if (_emitters.has($type)) {
+    if (!!_emitters[$type]) {
         // when the target does not have a map with registered emitters, create
         // a new one
-        if (!_targets.has($target)) {
-            _targets.set($target, new Map());
+        if (!_targets[$target]) {
+            _targets[$target] = {};
         }
 
         // get the class wich is associated with the extra custom event
-        var $emitterClass = _emitters.get($type);
-        var $targetEmitters = _targets.get($target);
+        var $emitterClass = _emitters[$type];
+        var $targetEmitters = _targets[$target];
 
         // check if the target already has an emitter of the requested type
         // active
-        if (!$targetEmitters.has($emitterClass)) {
+        if (!$targetEmitters[$emitterClass]) {
             // create a new emitter for the target, save and activate it
             var $emitter = new $emitterClass($target, $options);
 
-            $targetEmitters.set($emitterClass, $emitter);
+            $targetEmitters[$emitterClass] = $emitter;
             $emitter.activate();
         }
     }
