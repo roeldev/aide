@@ -33,6 +33,7 @@ module.exports = function($config)
         files: [
             'dist/*.js',
             //'src/**/*.js',
+            'test/helpers/*.js',
             'test/**/*.js'
         ],
 

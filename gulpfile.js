@@ -1,6 +1,6 @@
 'use strict';
 
-var Bundle      = require('./build/bundle.js');
+var Bundle      = require('./build/bundle');
 var Del         = require('del');
 var EventStream = require('event-stream');
 var Glob        = require('glob');

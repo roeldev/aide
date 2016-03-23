@@ -4,6 +4,8 @@ const Babelify          = require('babelify');
 const Browserify        = require('browserify');
 const Gulp              = require('gulp');
 const GulpHeader        = require('gulp-header');
+const GulpNotify        = require('gulp-notify');
+const GulpPlumber       = require('gulp-plumber');
 const GulpRename        = require('gulp-rename');
 const GulpSize          = require('gulp-size');
 const GulpUglify        = require('gulp-uglify');
@@ -34,6 +36,7 @@ module.exports = function($files)
         });
 
         return $browserify.bundle()
+            .pipe( GulpPlumber({ 'errorHandler': GulpNotify.onError('<%= error.message %>') }) )
             .pipe( VinylSourceStream($filename +'.js') )
             .pipe( VinylBuffer() )
             .pipe( GulpHeader($header.template, $header.vars) )
