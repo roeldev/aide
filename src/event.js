@@ -3,47 +3,15 @@
  */
 'use strict';
 
-/**
- * The current used plugin to add/remove and search for classes in the target.
- * @type {string}
- */
-const Utils = require('./event/utils');
-
-// -----------------------------------------------------------------------------
-
-/**
- * Creates a new Map with references to all custom extra events and the classes
- * that emit them.
- *
- * @return {Map}
- */
-function createEventsMap()
-{
-    let $result = {};
-
-    for (let $i = 0, $iL = arguments.length; $i < $iL; $i++)
-    {
-        let $class  = arguments[$i];
-        let $events = $class.eventTypes();
-
-        for (let $j = 0, $jL = $events.length; $j < $jL; $j++)
-        {
-            $result[$events[$j]] = $class;
-        }
-    }
-
-    return $result;
-}
-
-// -----------------------------------------------------------------------------
-
-const _targets  = {};
-const _emitters = createEventsMap(
-    require('./event/ResizeEventsEmitter'),
-    require('./event/ScrollEventsEmitter')
-);
+const addEventListener    = require('./event/utils/eventListener').add;
+const removeEventListener = require('./event/utils/eventListener').remove;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+const _targets  = {};
+const _emitters = {};
+
+// -----------------------------------------------------------------------------
 
 const AideEvent = function()
 {
@@ -100,7 +68,7 @@ AideEvent.on = function($target, $type, $listener)
         }
     }
 
-    return Utils.addListener($target, $type, $listener, $options);
+    return addEventListener($target, $type, $listener, $options);
 };
 
 /**
@@ -127,7 +95,7 @@ AideEvent.off = function($target, $type, $listener)
         }
     }
 
-    return Utils.removeListener($target, $type, $listener, $options);
+    return removeEventListener($target, $type, $listener, $options);
 };
 
 /**
@@ -166,5 +134,28 @@ AideEvent.once = function($target, $type, $listener)
 };
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+(function init($emitters)
+{
+    // for (let $i = 0, $iL = arguments.length; $i < $iL; $i++)
+    for (let $emitter in $emitters)
+    {
+        // let $emitter = arguments[$i];
+        let $class   = AideEvent[$emitter] = $emitters[$emitter];
+        let $events  = $class.eventTypes();
+
+        for (let $j = 0, $jL = $events.length; $j < $jL; $j++)
+        {
+            _emitters[$events[$j]] = $class;
+        }
+    }
+})(
+{
+    'InViewEventsEmitter': require('./event/InViewEventsEmitter'),
+    'ResizeEventsEmitter': require('./event/ResizeEventsEmitter'),
+    'ScrollEventsEmitter': require('./event/ScrollEventsEmitter')
+});
+
+// -----------------------------------------------------------------------------
 
 module.exports = AideEvent;

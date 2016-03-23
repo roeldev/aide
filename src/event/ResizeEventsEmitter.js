@@ -14,6 +14,8 @@ module.exports = class ResizeEventsEmitter
         return ['resizestart', 'resizeend'];
     }
 
+    // -------------------------------------------------------------------------
+
     constructor($target)
     {
         this.target = $target;
@@ -21,16 +23,9 @@ module.exports = class ResizeEventsEmitter
 
     activate()
     {
-        return Utils.addListener(this.target, 'resize', this.listener);
     }
 
     deactivate()
     {
-        return Utils.removeListener(this.target, 'resize', this.listener);
-    }
-
-    listener($event)
-    {
-        console.log('resize', $event);
     }
 };
