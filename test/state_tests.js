@@ -1,3 +1,8 @@
+/**
+ * aide | test/state_regexp_tests.js
+ */
+'use strict';
+
 describe('aide.state()', function aideSateTests()
 {
     beforeEach(function()
