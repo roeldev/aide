@@ -7,25 +7,28 @@
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-module.exports = class InViewEventsEmitter
+const InViewEventsEmitter = function($target)
 {
-    static eventTypes()
-    {
-        return ['inview'];
-    }
-
-    // -------------------------------------------------------------------------
-
-    constructor($target)
-    {
-        this.target = $target;
-    }
-
-    activate()
-    {
-    }
-
-    deactivate()
-    {
-    }
 };
+
+InViewEventsEmitter.prototype =
+{
+    activate: function()
+    {
+    },
+
+    deactivate: function()
+    {
+    }
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+InViewEventsEmitter.eventTypes =
+[
+    'resizestart', 'resizeend'
+]
+
+// -----------------------------------------------------------------------------
+
+module.exports = InViewEventsEmitter;

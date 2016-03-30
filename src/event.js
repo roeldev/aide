@@ -1,5 +1,7 @@
 /**
  * aide | src/event.js
+ *
+ * - tests
  */
 'use strict';
 
@@ -137,12 +139,10 @@ AideEvent.once = function($target, $type, $listener)
 
 (function init($emitters)
 {
-    // for (let $i = 0, $iL = arguments.length; $i < $iL; $i++)
     for (let $emitter in $emitters)
     {
-        // let $emitter = arguments[$i];
-        let $class   = AideEvent[$emitter] = $emitters[$emitter];
-        let $events  = $class.eventTypes();
+        let $class  = AideEvent[$emitter] = $emitters[$emitter];
+        let $events = $class.eventTypes;
 
         for (let $j = 0, $jL = $events.length; $j < $jL; $j++)
         {

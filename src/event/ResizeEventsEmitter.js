@@ -7,25 +7,28 @@
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-module.exports = class ResizeEventsEmitter
+const ResizeEventsEmitter = function($target)
 {
-    static eventTypes()
-    {
-        return ['resizestart', 'resizeend'];
-    }
-
-    // -------------------------------------------------------------------------
-
-    constructor($target)
-    {
-        this.target = $target;
-    }
-
-    activate()
-    {
-    }
-
-    deactivate()
-    {
-    }
 };
+
+ResizeEventsEmitter.prototype =
+{
+    activate: function()
+    {
+    },
+
+    deactivate: function()
+    {
+    }
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+ResizeEventsEmitter.eventTypes =
+[
+    'resizestart', 'resizeend'
+]
+
+// -----------------------------------------------------------------------------
+
+module.exports = ResizeEventsEmitter;

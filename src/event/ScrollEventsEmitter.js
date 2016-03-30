@@ -11,8 +11,6 @@ const addEventListener    = require('./utils/eventListener').add;
 const removeEventListener = require('./utils/eventListener').remove;
 const getScrollMax        = require('./utils/getScrollMax');
 const getScrollPos        = require('./utils/getScrollPos');
-const getWindowScrollMax  = require('./utils/getWindowScrollMax');
-const getWindowScrollPos  = require('./utils/getWindowScrollPos');
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
@@ -30,133 +28,81 @@ const EVENT_SCROLL_RIGHT = 'scrollright';
 
 // -----------------------------------------------------------------------------
 
-module.exports = class ScrollEventsEmitter
+const ScrollEventsEmitter = function($target)
 {
-    static eventTypes()
-    {
-        return [
-            EVENT_SCROLL_START,
-            EVENT_SCROLL_END,
-            EVENT_SCROLL_UP,
-            EVENT_SCROLL_DOWN,
-            EVENT_SCROLL_LEFT,
-            EVENT_SCROLL_RIGHT
-        ];
-    }
+    this.target = $target;
 
-    static getScrollMax($target)
-    {
-        return getScrollMax($target);
-    }
+    this.boundEventListener   = this.eventListener.bind(this);
+    this.boundTimeoutCallback = this.timeoutCallback.bind(this);
+};
 
-    static getScrollPos($target)
-    {
-        return getScrollPos($target);
-    }
+ScrollEventsEmitter.prototype =
+{
+    /**
+     * The target to listen and emit the events to.
+     *
+     * @type {object}
+     */
+    'target': null,
 
-    static getWindowScrollMax()
-    {
-        return getWindowScrollMax();
-    }
+    /**
+     * Scroll info object of the previous event.
+     *
+     * @type {object}
+     */
+    'scrollPrevious': null,
 
-    static getWindowScrollPos()
-    {
-        return getWindowScrollPos();
-    }
+    /**
+     * The scroll info object that is most recently created.
+     *
+     * @type {object}
+     */
+    'scrollCurrent': null,
+
+    /**
+     * The identifier created by setTimeout.
+     *
+     * @type {number}
+     */
+    'timeoutId': null,
+
+    /**
+     * A flag wich indicates if the emitter is active.
+     *
+     * @type {boolean}
+     */
+    'isActive': false,
+
+    /**
+     * A flag wich indicates if the scroll event is
+     * @type {Boolean}
+     */
+    'isScrolling': false,
+
+    /**
+     * A bound copy of the eventListener function wich is used to listen for
+     * scroll events on the target.
+     *
+     * @type {function}
+     */
+    'boundEventListener': null,
+
+    /**
+     * A bound copy of the timeoutCallback function wich is used to check if
+     * the scroll event is still being fired, or if the set timeout has
+     * expired, thus the scrolling has ended.
+     *
+     * @type {function}
+     */
+    'boundTimeoutCallback': null,
 
     // -------------------------------------------------------------------------
-
-    constructor($target)
-    {
-        /**
-         * The target to listen and emit the events to.
-         *
-         * @type {object}
-         */
-        this.target = $target;
-
-        /**
-         * A boolean wich indicates if the target of the emitter is the window
-         * object.
-         *
-         * @type {boolean}
-         */
-        this.targetIsWindow = ($target === window);
-
-        /**
-         * Scroll info object of the previous event.
-         *
-         * @type {object}
-         */
-        this.scrollPrevious;
-
-        /**
-         * The scroll info object that is most recently created.
-         *
-         * @type {object}
-         */
-        this.scrollCurrent;
-
-        /**
-         * The identifier created by setTimeout.
-         *
-         * @type {number}
-         */
-        this.timeoutId = null;
-
-        /**
-         * A flag wich indicates if the emitter is active.
-         *
-         * @type {boolean}
-         */
-        this.isActive = false;
-
-        /**
-         * A flag wich indicates if the scroll event is
-         * @type {Boolean}
-         */
-        this.isScrolling = false;
-
-        /**
-         * A bound copy of the eventListener function wich is used to listen for
-         * scroll events on the target.
-         *
-         * @type {function}
-         */
-        this.boundEventListener = this.eventListener.bind(this);
-
-        /**
-         * A bound copy of the timeoutCallback function wich is used to check if
-         * the scroll event is still being fired, or if the set timeout has
-         * expired, thus the scrolling has ended.
-         *
-         * @type {function}
-         */
-        this.boundTimeoutCallback = this.timeoutCallback.bind(this);
-
-        /**
-         * Returns the current scroll position (in pixels) of the target.
-         *
-         * @type {functions}
-         */
-        this.getScrollPos = (this.targetIsWindow ?
-                                getWindowScrollPos :
-                                getScrollPos);
-
-        /**
-         * Returns the maximum scroll position (in pixels) of the target.
-         * @type {function}
-         */
-        this.getScrollMax = (this.targetIsWindow ?
-                                getWindowScrollMax :
-                                getScrollMax);
-    }
 
     /**
      * Activates the emitter by listening to the native scroll event of the
      * target.
      */
-    activate()
+    activate: function()
     {
         let $result = false;
         if (!this.isActive)
@@ -170,12 +116,12 @@ module.exports = class ScrollEventsEmitter
         }
 
         return $result;
-    }
+    },
 
     /**
      * Deactivates the emitter by removing the scroll event from the target.
      */
-    deactivate()
+    deactivate: function()
     {
         let $result = false;
         if (this.isActive)
@@ -188,7 +134,7 @@ module.exports = class ScrollEventsEmitter
         }
 
         return $result;
-    }
+    },
 
     /**
      * Calculate all kinds of useful data wich are passed down to the event
@@ -198,10 +144,10 @@ module.exports = class ScrollEventsEmitter
      * @param {object} $prev [null] - The previous scroll info object to compare against
      * @return {object}
      */
-    scrollInfo($prev = null)
+    scrollInfo: function($prev = null)
     {
-        let $scrollPos = this.getScrollPos(this.target);
-        let $scrollMax = this.getScrollMax(this.target);
+        let $scrollPos = getScrollPos(this.target);
+        let $scrollMax = getScrollMax(this.target);
 
         let $result =
         {
@@ -210,28 +156,6 @@ module.exports = class ScrollEventsEmitter
             'scrollMaxX': $scrollMax.x,
             'scrollMaxY': $scrollMax.y
         };
-
-        // make sure all vars so far are numbers
-        // if (isNaN($result.scrollX))
-        // {
-        //     $result.scrollX = 0;
-        // }
-
-        // if (isNaN($result.scrollY))
-        // {
-        //     $result.scrollY = 0;
-        // }
-
-        // if (isNaN($result.scrollMaxX))
-        // {
-        //     $result.scrollMaxX = 0;
-        // }
-
-        // if (isNaN($result.scrollMaxY))
-        // {
-        //     $result.scrollMaxY = 0;
-        // }
-
 
         // the default positions and directions
         $result.positionX  = false;
@@ -274,7 +198,7 @@ module.exports = class ScrollEventsEmitter
         }
 
         return $result;
-    }
+    },
 
     /**
      * Dispatches an event on the target and passes down the current scroll
@@ -282,7 +206,7 @@ module.exports = class ScrollEventsEmitter
      *
      * @param {string} $eventType - The type of event to dispatch
      */
-    dispatchEvent($eventType)
+    dispatchEvent: function($eventType)
     {
         let $event = new CustomEvent($eventType,
         {
@@ -290,7 +214,7 @@ module.exports = class ScrollEventsEmitter
         });
 
         return this.target.dispatchEvent($event);
-    }
+    },
 
     /**
      * The event listener wich handles the native 'scroll' event on the target.
@@ -298,7 +222,7 @@ module.exports = class ScrollEventsEmitter
      * not yet set. It also clears the previous created timeout and adds
      * a new one to check when scrolling has stopped.
      */
-    eventListener($event)
+    eventListener: function($event)
     {
         // update the current scroll info
         this.scrollPrevious = this.scrollCurrent;
@@ -335,13 +259,13 @@ module.exports = class ScrollEventsEmitter
         // function wich dispatches the scrollend event
         clearTimeout(this.timeoutId);
         this.timeoutId = setTimeout(this.boundTimeoutCallback, 500);
-    }
+    },
 
     /**
      * This function is called when scrolling on the target has stopped for the
      * set amount of time. It dispatches the 'scrollend' event.
      */
-    timeoutCallback()
+    timeoutCallback: function()
     {
         clearTimeout(this.timeoutId);
 
@@ -350,4 +274,23 @@ module.exports = class ScrollEventsEmitter
 
         this.dispatchEvent(EVENT_SCROLL_END);
     }
-};
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+ScrollEventsEmitter.eventTypes =
+[
+    EVENT_SCROLL_START,
+    EVENT_SCROLL_END,
+    EVENT_SCROLL_UP,
+    EVENT_SCROLL_DOWN,
+    EVENT_SCROLL_LEFT,
+    EVENT_SCROLL_RIGHT
+];
+
+ScrollEventsEmitter.getScrollMax = getScrollMax;
+ScrollEventsEmitter.getScrollPos = getScrollPos;
+
+// -----------------------------------------------------------------------------
+
+module.exports = ScrollEventsEmitter;
