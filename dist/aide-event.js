@@ -2,6 +2,8 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.aide || (g.aide = {})).event = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * aide | src/event.js
+ *
+ * - tests
  */
 'use strict';
 
@@ -122,11 +124,9 @@ AideEvent.once = function ($target, $type, $listener) {
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 (function init($emitters) {
-    // for (let $i = 0, $iL = arguments.length; $i < $iL; $i++)
     for (var $emitter in $emitters) {
-        // let $emitter = arguments[$i];
         var $class = AideEvent[$emitter] = $emitters[$emitter];
-        var $events = $class.eventTypes();
+        var $events = $class.eventTypes;
 
         for (var $j = 0, $jL = $events.length; $j < $jL; $j++) {
             _emitters[$events[$j]] = $class;
@@ -152,37 +152,21 @@ module.exports = AideEvent;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var InViewEventsEmitter = function InViewEventsEmitter($target) {};
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+InViewEventsEmitter.prototype = {
+    activate: function activate() {},
 
-module.exports = (function () {
-    _createClass(InViewEventsEmitter, null, [{
-        key: 'eventTypes',
-        value: function eventTypes() {
-            return ['inview'];
-        }
+    deactivate: function deactivate() {}
+};
 
-        // -------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    }]);
+InViewEventsEmitter.eventTypes = ['resizestart', 'resizeend'];
 
-    function InViewEventsEmitter($target) {
-        _classCallCheck(this, InViewEventsEmitter);
+// -----------------------------------------------------------------------------
 
-        this.target = $target;
-    }
-
-    _createClass(InViewEventsEmitter, [{
-        key: 'activate',
-        value: function activate() {}
-    }, {
-        key: 'deactivate',
-        value: function deactivate() {}
-    }]);
-
-    return InViewEventsEmitter;
-})();
+module.exports = InViewEventsEmitter;
 
 },{}],3:[function(require,module,exports){
 /**
@@ -194,37 +178,21 @@ module.exports = (function () {
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var ResizeEventsEmitter = function ResizeEventsEmitter($target) {};
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+ResizeEventsEmitter.prototype = {
+    activate: function activate() {},
 
-module.exports = (function () {
-    _createClass(ResizeEventsEmitter, null, [{
-        key: 'eventTypes',
-        value: function eventTypes() {
-            return ['resizestart', 'resizeend'];
-        }
+    deactivate: function deactivate() {}
+};
 
-        // -------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    }]);
+ResizeEventsEmitter.eventTypes = ['resizestart', 'resizeend'];
 
-    function ResizeEventsEmitter($target) {
-        _classCallCheck(this, ResizeEventsEmitter);
+// -----------------------------------------------------------------------------
 
-        this.target = $target;
-    }
-
-    _createClass(ResizeEventsEmitter, [{
-        key: 'activate',
-        value: function activate() {}
-    }, {
-        key: 'deactivate',
-        value: function deactivate() {}
-    }]);
-
-    return ResizeEventsEmitter;
-})();
+module.exports = ResizeEventsEmitter;
 
 },{}],4:[function(require,module,exports){
 /**
@@ -234,18 +202,12 @@ module.exports = (function () {
  */
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
 var CustomEvent = require('./utils/CustomEvent');
 
 var addEventListener = require('./utils/eventListener').add;
 var removeEventListener = require('./utils/eventListener').remove;
-var _getScrollMax = require('./utils/getScrollMax');
-var _getScrollPos = require('./utils/getScrollPos');
-var _getWindowScrollMax = require('./utils/getWindowScrollMax');
-var _getWindowScrollPos = require('./utils/getWindowScrollPos');
+var getScrollMax = require('./utils/getScrollMax');
+var getScrollPos = require('./utils/getScrollPos');
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
@@ -263,309 +225,239 @@ var EVENT_SCROLL_RIGHT = 'scrollright';
 
 // -----------------------------------------------------------------------------
 
-module.exports = (function () {
-    _createClass(ScrollEventsEmitter, null, [{
-        key: 'eventTypes',
-        value: function eventTypes() {
-            return [EVENT_SCROLL_START, EVENT_SCROLL_END, EVENT_SCROLL_UP, EVENT_SCROLL_DOWN, EVENT_SCROLL_LEFT, EVENT_SCROLL_RIGHT];
-        }
-    }, {
-        key: 'getScrollMax',
-        value: function getScrollMax($target) {
-            return _getScrollMax($target);
-        }
-    }, {
-        key: 'getScrollPos',
-        value: function getScrollPos($target) {
-            return _getScrollPos($target);
-        }
-    }, {
-        key: 'getWindowScrollMax',
-        value: function getWindowScrollMax() {
-            return _getWindowScrollMax();
-        }
-    }, {
-        key: 'getWindowScrollPos',
-        value: function getWindowScrollPos() {
-            return _getWindowScrollPos();
-        }
+var ScrollEventsEmitter = function ScrollEventsEmitter($target) {
+    this.target = $target;
 
-        // -------------------------------------------------------------------------
+    this.boundEventListener = this.eventListener.bind(this);
+    this.boundTimeoutCallback = this.timeoutCallback.bind(this);
+};
 
-    }]);
+ScrollEventsEmitter.prototype = {
+    /**
+     * The target to listen and emit the events to.
+     *
+     * @type {object}
+     */
+    'target': null,
 
-    function ScrollEventsEmitter($target) {
-        _classCallCheck(this, ScrollEventsEmitter);
+    /**
+     * Scroll info object of the previous event.
+     *
+     * @type {object}
+     */
+    'scrollPrevious': null,
 
-        /**
-         * The target to listen and emit the events to.
-         *
-         * @type {object}
-         */
-        this.target = $target;
+    /**
+     * The scroll info object that is most recently created.
+     *
+     * @type {object}
+     */
+    'scrollCurrent': null,
 
-        /**
-         * A boolean wich indicates if the target of the emitter is the window
-         * object.
-         *
-         * @type {boolean}
-         */
-        this.targetIsWindow = $target === window;
+    /**
+     * The identifier created by setTimeout.
+     *
+     * @type {number}
+     */
+    'timeoutId': null,
 
-        /**
-         * Scroll info object of the previous event.
-         *
-         * @type {object}
-         */
-        this.scrollPrevious;
+    /**
+     * A flag wich indicates if the emitter is active.
+     *
+     * @type {boolean}
+     */
+    'isActive': false,
 
-        /**
-         * The scroll info object that is most recently created.
-         *
-         * @type {object}
-         */
-        this.scrollCurrent;
+    /**
+     * A flag wich indicates if the scroll event is
+     * @type {Boolean}
+     */
+    'isScrolling': false,
 
-        /**
-         * The identifier created by setTimeout.
-         *
-         * @type {number}
-         */
-        this.timeoutId = null;
+    /**
+     * A bound copy of the eventListener function wich is used to listen for
+     * scroll events on the target.
+     *
+     * @type {function}
+     */
+    'boundEventListener': null,
 
-        /**
-         * A flag wich indicates if the emitter is active.
-         *
-         * @type {boolean}
-         */
-        this.isActive = false;
+    /**
+     * A bound copy of the timeoutCallback function wich is used to check if
+     * the scroll event is still being fired, or if the set timeout has
+     * expired, thus the scrolling has ended.
+     *
+     * @type {function}
+     */
+    'boundTimeoutCallback': null,
 
-        /**
-         * A flag wich indicates if the scroll event is
-         * @type {Boolean}
-         */
-        this.isScrolling = false;
-
-        /**
-         * A bound copy of the eventListener function wich is used to listen for
-         * scroll events on the target.
-         *
-         * @type {function}
-         */
-        this.boundEventListener = this.eventListener.bind(this);
-
-        /**
-         * A bound copy of the timeoutCallback function wich is used to check if
-         * the scroll event is still being fired, or if the set timeout has
-         * expired, thus the scrolling has ended.
-         *
-         * @type {function}
-         */
-        this.boundTimeoutCallback = this.timeoutCallback.bind(this);
-
-        /**
-         * Returns the current scroll position (in pixels) of the target.
-         *
-         * @type {functions}
-         */
-        this.getScrollPos = this.targetIsWindow ? _getWindowScrollPos : _getScrollPos;
-
-        /**
-         * Returns the maximum scroll position (in pixels) of the target.
-         * @type {function}
-         */
-        this.getScrollMax = this.targetIsWindow ? _getWindowScrollMax : _getScrollMax;
-    }
+    // -------------------------------------------------------------------------
 
     /**
      * Activates the emitter by listening to the native scroll event of the
      * target.
      */
+    activate: function activate() {
+        var $result = false;
+        if (!this.isActive) {
+            this.isActive = true;
+            this.scrollPrevious = this.scrollInfo(false);
 
-    _createClass(ScrollEventsEmitter, [{
-        key: 'activate',
-        value: function activate() {
-            var $result = false;
-            if (!this.isActive) {
-                this.isActive = true;
-                this.scrollPrevious = this.scrollInfo(false);
-
-                $result = addEventListener(this.target, 'scroll', this.boundEventListener);
-            }
-
-            return $result;
+            $result = addEventListener(this.target, 'scroll', this.boundEventListener);
         }
 
-        /**
-         * Deactivates the emitter by removing the scroll event from the target.
-         */
-    }, {
-        key: 'deactivate',
-        value: function deactivate() {
-            var $result = false;
-            if (this.isActive) {
-                $result = removeEventListener(this.target, 'scroll', this.boundEventListener);
+        return $result;
+    },
 
-                this.isActive = false;
-            }
+    /**
+     * Deactivates the emitter by removing the scroll event from the target.
+     */
+    deactivate: function deactivate() {
+        var $result = false;
+        if (this.isActive) {
+            $result = removeEventListener(this.target, 'scroll', this.boundEventListener);
 
-            return $result;
+            this.isActive = false;
         }
 
-        /**
-         * Calculate all kinds of useful data wich are passed down to the event
-         * objects who are emitted and are used to calculate to direction of
-         * the scroll movement.
-         *
-         * @param {object} $prev [null] - The previous scroll info object to compare against
-         * @return {object}
-         */
-    }, {
-        key: 'scrollInfo',
-        value: function scrollInfo() {
-            var $prev = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+        return $result;
+    },
 
-            var $scrollPos = this.getScrollPos(this.target);
-            var $scrollMax = this.getScrollMax(this.target);
+    /**
+     * Calculate all kinds of useful data wich are passed down to the event
+     * objects who are emitted and are used to calculate to direction of
+     * the scroll movement.
+     *
+     * @param {object} $prev [null] - The previous scroll info object to compare against
+     * @return {object}
+     */
+    scrollInfo: function scrollInfo() {
+        var $prev = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-            var $result = {
-                'scrollX': $scrollPos.x,
-                'scrollY': $scrollPos.y,
-                'scrollMaxX': $scrollMax.x,
-                'scrollMaxY': $scrollMax.y
-            };
+        var $scrollPos = getScrollPos(this.target);
+        var $scrollMax = getScrollMax(this.target);
 
-            // make sure all vars so far are numbers
-            // if (isNaN($result.scrollX))
-            // {
-            //     $result.scrollX = 0;
-            // }
+        var $result = {
+            'scrollX': $scrollPos.x,
+            'scrollY': $scrollPos.y,
+            'scrollMaxX': $scrollMax.x,
+            'scrollMaxY': $scrollMax.y
+        };
 
-            // if (isNaN($result.scrollY))
-            // {
-            //     $result.scrollY = 0;
-            // }
+        // the default positions and directions
+        $result.positionX = false;
+        $result.positionY = false;
+        $result.directionX = false;
+        $result.directionY = false;
 
-            // if (isNaN($result.scrollMaxX))
-            // {
-            //     $result.scrollMaxX = 0;
-            // }
-
-            // if (isNaN($result.scrollMaxY))
-            // {
-            //     $result.scrollMaxY = 0;
-            // }
-
-            // the default positions and directions
-            $result.positionX = false;
-            $result.positionY = false;
-            $result.directionX = false;
-            $result.directionY = false;
-
-            // the target's x/y position in percentages
-            if ($result.scrollMaxX > 0) {
-                $result.positionX = $result.scrollX / $result.scrollMaxX;
-            }
-
-            if ($result.scrollMaxY > 0) {
-                $result.positionY = $result.scrollY / $result.scrollMaxY;
-            }
-
-            // when no prev object is given, take it from the emitter object
-            if (!$prev && $prev !== false) {
-                $prev = this.scrollPrevious;
-            }
-            // get the scroll direction relative from the previous position
-            if ($prev) {
-                if ($prev.positionX != $result.positionX) {
-                    $result.directionX = $prev.positionX < $result.positionX ? DIRECTION_RIGHT : DIRECTION_LEFT;
-                }
-
-                if ($prev.positionY != $result.positionY) {
-                    $result.directionY = $prev.positionY < $result.positionY ? DIRECTION_DOWN : DIRECTION_UP;
-                }
-            }
-
-            return $result;
+        // the target's x/y position in percentages
+        if ($result.scrollMaxX > 0) {
+            $result.positionX = $result.scrollX / $result.scrollMaxX;
         }
 
-        /**
-         * Dispatches an event on the target and passes down the current scroll
-         * info object.
-         *
-         * @param {string} $eventType - The type of event to dispatch
-         */
-    }, {
-        key: 'dispatchEvent',
-        value: function dispatchEvent($eventType) {
-            var $event = new CustomEvent($eventType, {
-                'detail': this.scrollCurrent
-            });
-
-            return this.target.dispatchEvent($event);
+        if ($result.scrollMaxY > 0) {
+            $result.positionY = $result.scrollY / $result.scrollMaxY;
         }
 
-        /**
-         * The event listener wich handles the native 'scroll' event on the target.
-         * It dispatches the 'scrollstart' event when the _isScrolling_ flag is
-         * not yet set. It also clears the previous created timeout and adds
-         * a new one to check when scrolling has stopped.
-         */
-    }, {
-        key: 'eventListener',
-        value: function eventListener($event) {
-            // update the current scroll info
-            this.scrollPrevious = this.scrollCurrent;
-            var $scroll = this.scrollCurrent = this.scrollInfo();
-
-            // dispatch scrollstart event
-            if (!this.isScrolling) {
-                this.isScrolling = true;
-                this.dispatchEvent(EVENT_SCROLL_START);
+        // when no prev object is given, take it from the emitter object
+        if (!$prev && $prev !== false) {
+            $prev = this.scrollPrevious;
+        }
+        // get the scroll direction relative from the previous position
+        if ($prev) {
+            if ($prev.positionX != $result.positionX) {
+                $result.directionX = $prev.positionX < $result.positionX ? DIRECTION_RIGHT : DIRECTION_LEFT;
             }
 
-            // dispatch scrollup/scrolldown events
-            if ($scroll.directionY === DIRECTION_DOWN) {
-                this.dispatchEvent(EVENT_SCROLL_DOWN);
-            } else if ($scroll.directionY === DIRECTION_UP) {
-                this.dispatchEvent(EVENT_SCROLL_UP);
+            if ($prev.positionY != $result.positionY) {
+                $result.directionY = $prev.positionY < $result.positionY ? DIRECTION_DOWN : DIRECTION_UP;
             }
-
-            // dispatch scrollright/scrollleft events
-            if ($scroll.directionX === DIRECTION_RIGHT) {
-                this.dispatchEvent(EVENT_SCROLL_RIGHT);
-            } else if ($scroll.directionX === DIRECTION_LEFT) {
-                this.dispatchEvent(EVENT_SCROLL_LEFT);
-            }
-
-            // clear the previous timeout: reset the call to the timeout callback
-            // function wich dispatches the scrollend event
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(this.boundTimeoutCallback, 500);
         }
 
-        /**
-         * This function is called when scrolling on the target has stopped for the
-         * set amount of time. It dispatches the 'scrollend' event.
-         */
-    }, {
-        key: 'timeoutCallback',
-        value: function timeoutCallback() {
-            clearTimeout(this.timeoutId);
+        return $result;
+    },
 
-            this.timeoutId = false;
-            this.isScrolling = false;
+    /**
+     * Dispatches an event on the target and passes down the current scroll
+     * info object.
+     *
+     * @param {string} $eventType - The type of event to dispatch
+     */
+    dispatchEvent: function dispatchEvent($eventType) {
+        var $event = new CustomEvent($eventType, {
+            'detail': this.scrollCurrent
+        });
 
-            this.dispatchEvent(EVENT_SCROLL_END);
+        return this.target.dispatchEvent($event);
+    },
+
+    /**
+     * The event listener wich handles the native 'scroll' event on the target.
+     * It dispatches the 'scrollstart' event when the _isScrolling_ flag is
+     * not yet set. It also clears the previous created timeout and adds
+     * a new one to check when scrolling has stopped.
+     */
+    eventListener: function eventListener($event) {
+        // update the current scroll info
+        this.scrollPrevious = this.scrollCurrent;
+        var $scroll = this.scrollCurrent = this.scrollInfo();
+
+        // dispatch scrollstart event
+        if (!this.isScrolling) {
+            this.isScrolling = true;
+            this.dispatchEvent(EVENT_SCROLL_START);
         }
-    }]);
 
-    return ScrollEventsEmitter;
-})();
+        // dispatch scrollup/scrolldown events
+        if ($scroll.directionY === DIRECTION_DOWN) {
+            this.dispatchEvent(EVENT_SCROLL_DOWN);
+        } else if ($scroll.directionY === DIRECTION_UP) {
+            this.dispatchEvent(EVENT_SCROLL_UP);
+        }
 
-},{"./utils/CustomEvent":5,"./utils/eventListener":6,"./utils/getScrollMax":7,"./utils/getScrollPos":8,"./utils/getWindowScrollMax":9,"./utils/getWindowScrollPos":10}],5:[function(require,module,exports){
+        // dispatch scrollright/scrollleft events
+        if ($scroll.directionX === DIRECTION_RIGHT) {
+            this.dispatchEvent(EVENT_SCROLL_RIGHT);
+        } else if ($scroll.directionX === DIRECTION_LEFT) {
+            this.dispatchEvent(EVENT_SCROLL_LEFT);
+        }
+
+        // clear the previous timeout: reset the call to the timeout callback
+        // function wich dispatches the scrollend event
+        clearTimeout(this.timeoutId);
+        this.timeoutId = setTimeout(this.boundTimeoutCallback, 500);
+    },
+
+    /**
+     * This function is called when scrolling on the target has stopped for the
+     * set amount of time. It dispatches the 'scrollend' event.
+     */
+    timeoutCallback: function timeoutCallback() {
+        clearTimeout(this.timeoutId);
+
+        this.timeoutId = false;
+        this.isScrolling = false;
+
+        this.dispatchEvent(EVENT_SCROLL_END);
+    }
+};
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+ScrollEventsEmitter.eventTypes = [EVENT_SCROLL_START, EVENT_SCROLL_END, EVENT_SCROLL_UP, EVENT_SCROLL_DOWN, EVENT_SCROLL_LEFT, EVENT_SCROLL_RIGHT];
+
+ScrollEventsEmitter.getScrollMax = getScrollMax;
+ScrollEventsEmitter.getScrollPos = getScrollPos;
+
+// -----------------------------------------------------------------------------
+
+module.exports = ScrollEventsEmitter;
+
+},{"./utils/CustomEvent":5,"./utils/eventListener":6,"./utils/getScrollMax":7,"./utils/getScrollPos":8}],5:[function(require,module,exports){
 /**
  * aide | src/event/utils/CustomEvent.js
+ *
+ * - tests
  */
 
 'use strict';
@@ -592,6 +484,8 @@ module.exports = typeof win.CustomEvent !== 'function' ? CustomEventPolyfill : w
 },{}],6:[function(require,module,exports){
 /**
  * aide | src/event/utils/eventListener.js
+ *
+ * - tests
  */
 
 'use strict';
@@ -655,60 +549,27 @@ module.exports = {
 },{}],7:[function(require,module,exports){
 /**
  * aide | src/utils/getScrollMax.js
+ *
+ * ✓ tests
  */
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-// return the current scroll position on the window
 'use strict';
 
-module.exports = function getScrollMax($target) {
-    return {
-        'x': $target.scrollMaxX || $target.scrollLeftMax || $target.scrollWidth - $target.clientWidth,
-        'y': $target.scrollMaxY || $target.scrollTopMax || $target.scrollHeight - $target.clientHeight
-    };
-};
-
-},{}],8:[function(require,module,exports){
-/**
- * aide | src/utils/getScrollPos.js
- */
-'use strict';
-
-var doc = document.documentElement;
-var body = document.body;
 var win = window;
-
-// // // // // // // // // // // // // // // // // // // // // // // // // // //
-
-// return the current scroll position on the window
-module.exports = function getScrollPos($target) {
-    return {
-        'x': $target.scrollX || $target.scrollLeft,
-        'y': $target.scrollY || $target.scrollTop
-    };
-};
-
-},{}],9:[function(require,module,exports){
-/**
- * aide | src/utils/getWindowScrollMax.js
- */
-'use strict';
-
 var body = document.body;
-var win = window;
-
 var mathMax = Math.max;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-var _export = undefined;
+var _getWindowScrollMax = undefined;
 
 // -----------------------------------------------------------------------------
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxX
 if (win.scrollMaxX && win.scrollMaxY) {
-    _export = function getWindowScrollMax() {
+    _getWindowScrollMax = function getWindowScrollMaxXY() {
         return {
             'x': mathMax(win.scrollMaxX, 0),
             'y': mathMax(win.scrollMaxY, 0)
@@ -717,14 +578,14 @@ if (win.scrollMaxX && win.scrollMaxY) {
 }
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeftMax
 else if (win.scrollTopMax && win.scrollLeftMax) {
-        _export = function getWindowScrollMaxTopLeft() {
+        _getWindowScrollMax = function getWindowScrollMaxTopLeft() {
             return {
                 'x': mathMax(win.scrollLeftMax, 0),
                 'y': mathMax(win.scrollTopMax, 0)
             };
         };
     } else {
-        _export = function getWindowScrollMaxScrollInner() {
+        _getWindowScrollMax = function getWindowScrollMaxScrollInner() {
             return {
                 'x': mathMax(body.scrollWidth - win.innerWidth, 0),
                 'y': mathMax(body.scrollHeight - win.innerHeight, 0)
@@ -734,22 +595,42 @@ else if (win.scrollTopMax && win.scrollLeftMax) {
 
 // -----------------------------------------------------------------------------
 
-module.exports = _export;
+// return the current scroll position on the window
+module.exports = function getScrollMax($target) {
+    if ($target === window) {
+        return _getWindowScrollMax();
+    }
 
-},{}],10:[function(require,module,exports){
+    return {
+        'x': $target.scrollMaxX || $target.scrollLeftMax || $target.scrollWidth - $target.clientWidth,
+
+        'y': $target.scrollMaxY || $target.scrollTopMax || $target.scrollHeight - $target.clientHeight
+    };
+};
+
+},{}],8:[function(require,module,exports){
 /**
- * aide | src/utils/getWindowScrollPos.js
+ * aide | src/utils/getScrollPos.js
+ *
+ * ✓ tests
  */
-"use strict";
-
-var doc = document.documentElement;
-var body = document.body;
-var win = window;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
+'use strict';
+
+var isNaN = Number.isNaN;
+
 // return the current scroll position on the window
-module.exports = function getWindowScrollPos() {};
+module.exports = function getScrollPos($target) {
+    var $x = $target.scrollX || $target.scrollLeft;
+    var $y = $target.scrollY || $target.scrollTop;
+
+    return {
+        'x': $x || 0,
+        'y': $y || 0
+    };
+};
 
 },{}]},{},[1])(1)
 });

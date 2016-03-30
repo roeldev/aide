@@ -1,17 +1,21 @@
 /**
  * aide | src/utils/getScrollPos.js
+ *
+ * ✓ tests
  */
-const doc  = document.documentElement;
-const body = document.body;
-const win  = window;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+const isNaN = Number.isNaN;
 
 // return the current scroll position on the window
 module.exports = function getScrollPos($target)
 {
+    let $x = $target.scrollX || $target.scrollLeft;
+    let $y = $target.scrollY || $target.scrollTop
+
     return {
-        'x': $target.scrollX || $target.scrollLeft,
-        'y': $target.scrollY || $target.scrollTop
-    }
+        'x': $x || 0,
+        'y': $y || 0
+    };
 };

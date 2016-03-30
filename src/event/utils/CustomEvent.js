@@ -1,5 +1,7 @@
 /**
  * aide | src/event/utils/CustomEvent.js
+ *
+ * - tests
  */
 
 const win = window;
