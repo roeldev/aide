@@ -1,18 +1,20 @@
 /**
  * aide | src/state.js
+ *
+ * - tests
  */
 'use strict';
 
-const UtilsClassList = require('./state/classlist');
-const UtilsRegExp    = require('./state/regexp');
+const utilsClassList = require('./state/utilsClassList');
+const utilsRegExp    = require('./state/utilsRegExp');
 
 /**
  * The current used plugin to add/remove and search for classes in the target.
  * @type {string}
  */
-const Utils = (document.documentElement.classList ?
-               UtilsClassList :
-               UtilsRegExp);
+const utils = (document.documentElement.classList ?
+               utilsClassList :
+               utilsRegExp);
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
@@ -65,7 +67,7 @@ const AideState = function($flag, $value=true)
  */
 AideState.search = function($flag)
 {
-    return Utils.search(AideState.TARGET, $flag, AideState.SEPERATOR);
+    return utils.search(AideState.TARGET, $flag, AideState.SEPERATOR);
 };
 
 /**
@@ -98,14 +100,14 @@ AideState.set = function($flag, $value='', $bool=true)
     // if we've found the currently set flagValue, remove it
     if ($found !== false && $flag != $found)
     {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
         $found = false;
     }
 
     // when not already set, add the new flag to the list
     if (!$found)
     {
-        Utils.add(AideState.TARGET, $flag);
+        utils.add(AideState.TARGET, $flag);
         $result = true;
     }
 
@@ -125,7 +127,7 @@ AideState.unset = function($flag)
 
     if ($found !== false)
     {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
         $result = true;
     }
     return $result;
@@ -146,7 +148,7 @@ AideState.toggle = function($flag, $value='')
 
     if ($found !== false)
     {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
     }
     else
     {
@@ -169,13 +171,13 @@ AideState.TARGET = document.documentElement;
  */
 AideState.SEPERATOR = '--';
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 // expose both versions of adding/removing/searching for classes so they can be
 // tested seperatly
-AideState._classList = UtilsClassList;
-AideState._regExp    = UtilsRegExp;
+AideState._classList = utilsClassList;
+AideState._regExp    = utilsRegExp;
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // //
+// -----------------------------------------------------------------------------
 
 module.exports = AideState;

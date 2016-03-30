@@ -2,17 +2,19 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.aide || (g.aide = {})).state = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * aide | src/state.js
+ *
+ * - tests
  */
 'use strict';
 
-var UtilsClassList = require('./state/classlist');
-var UtilsRegExp = require('./state/regexp');
+var utilsClassList = require('./state/utilsClassList');
+var utilsRegExp = require('./state/utilsRegExp');
 
 /**
  * The current used plugin to add/remove and search for classes in the target.
  * @type {string}
  */
-var Utils = document.documentElement.classList ? UtilsClassList : UtilsRegExp;
+var utils = document.documentElement.classList ? utilsClassList : utilsRegExp;
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
@@ -61,7 +63,7 @@ var AideState = function AideState($flag) {
  * @return {string|boolean}
  */
 AideState.search = function ($flag) {
-    return Utils.search(AideState.TARGET, $flag, AideState.SEPERATOR);
+    return utils.search(AideState.TARGET, $flag, AideState.SEPERATOR);
 };
 
 /**
@@ -93,13 +95,13 @@ AideState.set = function ($flag) {
 
     // if we've found the currently set flagValue, remove it
     if ($found !== false && $flag != $found) {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
         $found = false;
     }
 
     // when not already set, add the new flag to the list
     if (!$found) {
-        Utils.add(AideState.TARGET, $flag);
+        utils.add(AideState.TARGET, $flag);
         $result = true;
     }
 
@@ -117,7 +119,7 @@ AideState.unset = function ($flag) {
     var $found = AideState.search($flag);
 
     if ($found !== false) {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
         $result = true;
     }
     return $result;
@@ -138,7 +140,7 @@ AideState.toggle = function ($flag) {
     var $found = AideState.search($flag);
 
     if ($found !== false) {
-        Utils.remove(AideState.TARGET, $found);
+        utils.remove(AideState.TARGET, $found);
     } else {
         AideState.set($flag, $value);
         $result = true;
@@ -159,22 +161,26 @@ AideState.TARGET = document.documentElement;
  */
 AideState.SEPERATOR = '--';
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 // expose both versions of adding/removing/searching for classes so they can be
 // tested seperatly
-AideState._classList = UtilsClassList;
-AideState._regExp = UtilsRegExp;
+AideState._classList = utilsClassList;
+AideState._regExp = utilsRegExp;
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // //
+// -----------------------------------------------------------------------------
 
 module.exports = AideState;
 
-},{"./state/classlist":2,"./state/regexp":3}],2:[function(require,module,exports){
+},{"./state/utilsClassList":2,"./state/utilsRegExp":3}],2:[function(require,module,exports){
 /**
  * aide | src/state/classlist.js
+ *
+ * - tests
  */
 'use strict';
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 module.exports = {
     /**
@@ -201,12 +207,11 @@ module.exports = {
                 // value seperator
                 $flag += $seperator;
 
-                var $i = 0;
                 var $classListLength = $classList.length;
                 var $flagLength = $flag.length;
                 var $class = undefined;
 
-                for (; $i < $classListLength; $i++) {
+                for (var $i = 0; $i < $classListLength; $i++) {
                     $class = $classList[$i];
 
                     if ($class.indexOf($seperator) && $class.substring(0, $flagLength) == $flag) {
@@ -243,8 +248,12 @@ module.exports = {
 },{}],3:[function(require,module,exports){
 /**
  * aide | src/state/regexp.js
+ *
+ * - tests
  */
 'use strict';
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 /**
  * Creates a new RegExp object wich matches the given flag.
@@ -267,7 +276,7 @@ function escapeRegExp($str) {
     return $str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // //
+// -----------------------------------------------------------------------------
 
 module.exports = {
     /**

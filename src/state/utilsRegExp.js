@@ -1,7 +1,11 @@
 /**
  * aide | src/state/regexp.js
+ *
+ * - tests
  */
 'use strict';
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 /**
  * Creates a new RegExp object wich matches the given flag.
@@ -26,7 +30,7 @@ function escapeRegExp($str)
   return $str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // //
+// -----------------------------------------------------------------------------
 
 module.exports =
 {

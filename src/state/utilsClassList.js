@@ -1,7 +1,11 @@
 /**
  * aide | src/state/classlist.js
+ *
+ * - tests
  */
 'use strict';
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 module.exports =
 {
@@ -32,12 +36,11 @@ module.exports =
             // value seperator
             $flag += $seperator;
 
-            let $i               = 0;
             let $classListLength = $classList.length;
             let $flagLength      = $flag.length;
             let $class;
 
-            for (; $i < $classListLength; $i++)
+            for (let $i = 0; $i < $classListLength; $i++)
             {
                 $class = $classList[$i];
 
