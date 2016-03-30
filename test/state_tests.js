@@ -3,12 +3,19 @@
  */
 'use strict';
 
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+initTestPage();
+
+// -----------------------------------------------------------------------------
+
 describe('aide.state()', function aideSateTests()
 {
     beforeEach(function()
     {
-        this.target = document.documentElement;
-        this.target.className = 'foo test1 bar test2--value baz';
+        resetTestPage();
+
+        document.documentElement.className = 'foo test1 bar test2--value baz';
     });
 
     it('return true when the flag is set', function()

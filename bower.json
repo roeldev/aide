@@ -8,8 +8,7 @@
   ],
   "license": "GPL-2.0+",
   "main": [
-    "dist/aide-resize.js",
-    "dist/aide-scroll.js",
+    "dist/aide-event.js",
     "dist/aide-state.js"
   ],
   "repository": {

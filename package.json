@@ -37,6 +37,7 @@
     "karma-sauce-launcher": "^0.3.0",
     "mocha": "^2.3.3",
     "mocha-lcov-reporter": "1.0.0",
+    "normalize.css": "^4.0.0",
     "phantomjs": "^1.9.18",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
